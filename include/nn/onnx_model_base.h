@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <algorithm>
 
 /*
  * This interface must provide only required arguments to load any onnx model regarding specific info -

@@ -316,12 +316,12 @@ void plot_results(cv::Mat img, std::vector<YoloResults>& results,
 
 int main()
 {
-    std::string img_path = "../../images/000000000382.jpg";
+    std::string img_path = "image_2.jpg";
     //const std::img_path& modelPath = "./checkpoints/yolov8n.onnx"; // detection
     // vs:
     //    const std::string& modelPath = "./checkpoints/yolov8n-seg.onnx"; // instance segmentation
     // clion:
-    const std::string& modelPath = "../../checkpoints/yolov8n-pose.onnx"; // pose
+    const std::string& modelPath = "best_1920_1088.onnx"; // pose
 
     fs::path imageFilePath(img_path);
     fs::path newFilePath = imageFilePath.stem();
@@ -330,11 +330,11 @@ int main()
     assert(newFilePath != imageFilePath);
     std::cout << "newFilePath: " << newFilePath << std::endl;
 
-    const std::string& onnx_provider = OnnxProviders::CPU; // "cpu";
+    const std::string& onnx_provider = OnnxProviders::CPU;
     const std::string& onnx_logid = "yolov8_inference2";
-    float mask_threshold = 0.5f;  // in python it's 0.5 and you can see that at ultralytics/utils/ops.process_mask line 705 (ultralytics.__version__ == .160)
+    float mask_threshold = 0.5f;
     float conf_threshold = 0.30f;
-    float iou_threshold = 0.45f;  //  0.70f;
+    float iou_threshold = 0.45f;
 	int conversion_code = cv::COLOR_BGR2RGB;
     cv::Mat img = cv::imread(img_path, cv::IMREAD_UNCHANGED);
     if (img.empty()) {
@@ -352,9 +352,9 @@ int main()
     }
 
     cv::cvtColor(img, img, cv::COLOR_RGB2BGR);
-    cv::Size show_shape = img.size();  // cv::Size(1280, 720); // img.size()
+    cv::Size show_shape = img.size();
     plot_results(img, objs, colors, names, show_shape);
-//    plot_masks(img, objs, colors, names);
+    //plot_masks(img, objs, colors, names);
     cv::imshow("img", img);
     cv::waitKey();
     return -1;
