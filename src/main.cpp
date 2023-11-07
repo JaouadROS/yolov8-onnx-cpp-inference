@@ -330,7 +330,7 @@ int main()
     assert(newFilePath != imageFilePath);
     std::cout << "newFilePath: " << newFilePath << std::endl;
 
-    const std::string& onnx_provider = OnnxProviders::CPU;
+    const std::string& onnx_provider = OnnxProviders::CUDA;
     const std::string& onnx_logid = "yolov8_inference2";
     float mask_threshold = 0.5f;
     float conf_threshold = 0.30f;
