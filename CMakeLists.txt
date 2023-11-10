@@ -4,7 +4,7 @@ project(YOLOv8CPP)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(OpenCV 4.8.0 REQUIRED)
+find_package(OpenCV 4.8.0 REQUIRED PATHS /media/jaouadros/Data/opencv_versions/opencv_4_8_0/opencv/build)
 
 set(ONNXRUNTIME_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/onnxruntime-linux-x64-gpu-1.17.0/")
 
