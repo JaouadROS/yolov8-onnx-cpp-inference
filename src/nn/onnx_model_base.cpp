@@ -22,9 +22,7 @@
  * @param[in] provider Provider (e.g., "CPU" or "CUDA"). (NOTE: for now only CPU is supported)
  */
 
-OnnxModelBase::OnnxModelBase(const char* modelPath, const char* logid, const char* provider)
-//: modelPath_(modelPath), env(std::move(env)), session(std::move(session))
-    : modelPath_(modelPath)
+OnnxModelBase::OnnxModelBase(const char* modelPath, const char* logid, const char* provider) : modelPath_(modelPath)
 {
 
     // TODO: too bad passing `ORT_LOGGING_LEVEL_WARNING` by default - for some cases
@@ -39,10 +37,8 @@ OnnxModelBase::OnnxModelBase(const char* modelPath, const char* logid, const cha
     if (provider == OnnxProviders::CUDA.c_str()) {  // strcmp(provider, OnnxProviders::CUDA.c_str()) == true strcmp(provider, "cuda") // (providerStr == "cuda")
         if (cudaAvailable == availableProviders.end()) {
             std::cout << "CUDA is not supported by your ONNXRuntime build. Fallback to CPU." << std::endl;
-            //std::cout << "Inference device: CPU" << std::endl;
         }
         else {
-            //std::cout << "Inference device: GPU" << std::endl;
             sessionOptions.AppendExecutionProvider_CUDA(cudaOption);
         }
     }
@@ -56,13 +52,9 @@ OnnxModelBase::OnnxModelBase(const char* modelPath, const char* logid, const cha
     }
 
     std::cout << "Inference device: " << std::string(provider) << std::endl;
-    auto modelPathW = get_win_path(modelPath);
+
     session = Ort::Session(env, modelPath, sessionOptions);
-    //session = Ort::Session(env)
-    // https://github.com/microsoft/onnxruntime/issues/14157
-    //std::vector<const char*> inputNodeNames; //
-    // ----------------
-    // init input names
+
     inputNodeNames;
     std::vector<Ort::AllocatedStringPtr> inputNodeNameAllocatedStrings; // <-- newly added
     Ort::AllocatorWithDefaultOptions allocator;
@@ -162,8 +154,6 @@ const std::vector<const char*> OnnxModelBase::getInputNamesCStr()
 
 std::vector<Ort::Value> OnnxModelBase::forward(std::vector<Ort::Value>& inputTensors)
 {
-    // todo: make runOptions parameter here
-
     return session.Run(Ort::RunOptions{ nullptr },
         inputNamesCStr.data(),
         inputTensors.data(),
@@ -171,7 +161,3 @@ std::vector<Ort::Value> OnnxModelBase::forward(std::vector<Ort::Value>& inputTen
         outputNamesCStr.data(),
         outputNamesCStr.size());
 }
-
-//OnnxModelBase::~OnnxModelBase() {
-//    // empty body
-//}
